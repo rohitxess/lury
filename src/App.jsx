@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Layout from "./components/layouts/Layout"
+import Welcome from "./components/layouts/Welcome"
+import Dashboard from "./components/layouts/Dashboard"
+import Challenge from "./components/layouts/Challenge"
 
 function App() {
-  const [count, setCount] = useState(0)
+   // zero is for welcome, 1 is for dashboard and 2 is for challenege
+
+   const selectedPage = 1;
+   
+   const pages = {
+      0: <Welcome />,
+      1: <Dashboard />,
+      2: <Challenge />
+   }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+     <Layout>
+         {pages[selectedPage]}
+     </Layout>
+    
+  ) 
 }
 
 export default App
+
+// the layout is rendering 
+// welcome and dashboard is wrapped inside the layout hence 
+// they become the children and that is why it has to be passed as a children/prop to the layout 
