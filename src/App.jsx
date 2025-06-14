@@ -6,7 +6,7 @@ import Challenge from "./components/layouts/Challenge"
 function App() {
    // zero is for welcome, 1 is for dashboard and 2 is for challenege
 
-   const selectedPage = 1;
+   const selectedPage = 2;
    
    const pages = {
       0: <Welcome />,
