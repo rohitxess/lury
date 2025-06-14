@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function ProgressBar() {
-
-  const text ='hello'
+export default function ProgressBar(props) {
+  const { text, remainder } = props;
+  // const text ='hello'
   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   
   return (
@@ -17,7 +17,7 @@ export default function ProgressBar() {
         )
       })}
 
-      <div className='xp' style={{width: `${80}%`}}></div>
+      <div className='xp' style={{width: `${remainder}%`}}></div>
     </div>
     
   )

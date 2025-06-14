@@ -17,7 +17,7 @@ export default function Layout(props) {
                 <a href="https://github.com/rohitxess?tab=repositories" target="_blank">
                     <img src="https://avatars.githubusercontent.com/u/34299640?s=400&u=edd9df0e598932c317e3faf477570eafbb779422&v=4" alt="" />
                     <p>rohitxess</p>
-                    <i class="fa-brands fa-github"></i>
+                    <i className="fa-brands fa-github"></i>
                 </a>
             </footer> 
         </>
