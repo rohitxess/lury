@@ -5,7 +5,7 @@ export default function Layout(props) {
         <>
             <header>
                 <h1 className="text-gradient">
-                    LURY Build you Vocab
+                    LURY <small>Build your Vocab</small> 
                 </h1>
             </header> 
             
