@@ -113,6 +113,12 @@ absolute means that the text will overlay */
     background: var(--color-link);
 }
 
+.countdown-card{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .items-header{
     color: var(--border-secondary);
 }
@@ -127,11 +133,7 @@ absolute means that the text will overlay */
     padding: 0.75rem;
 }
 
-.countdown-card{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+
 
 .start-task{
     width: 100%;

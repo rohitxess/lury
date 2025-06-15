@@ -5,7 +5,7 @@ import Challenge from "./components/layouts/Challenge"
 import { useState, useEffect } from "react"
 
 import WORDS from './utils/VOCAB.json'
-import { PLAN, getWordByIndex } from './utils'
+import { PLAN, countdownIn24Hours, getWordByIndex } from './utils'
 
 function App() {
    // zero is for welcome, 1 is for dashboard and 2 is for challenege
@@ -14,14 +14,15 @@ function App() {
    const [ name, setName ] = useState("")
    const [ day, setDay ] = useState(1)
    const [ datetime, setDatetime ] = useState(null)
-   const [ history, setHistory ] = useState([])
+   const [ history, setHistory ] = useState({})
    const [ attempts, setAttempts ] = useState(0)
 
+  
    const daysWords = PLAN[day].map((idx) => {
-      return getWordByIndex(WORDS, idx)
+      return getWordByIndex(WORDS, idx).word
       
    })
-   console.log(daysWords)
+   console.log('from dayswords',daysWords)
    
 
    function handleChangePage(pageIndex){
@@ -82,13 +83,60 @@ function App() {
 
          setSelectedPage(1);
       }
+      if (localStorage.getItem('attempts')){
+         // then we found attempts
+         setAttempts(parseInt(localStorage.getItem('attempts')))
+   
+      }
+
+      if (localStorage.getItem('history')){
+         // then we set we the state
+         setHistory(JSON.parse(localStorage.getItem('history')))
+      }
+
+      // fix this later 
+      
+      if (localStorage.getItem('day')){
+         const {day: d, datetime: dt}  = JSON.parse(localStorage.getItem('day'))
+
+         setDatetime(dt)
+         setDay(d)
+
+         if (d > 1 && dt){
+            const diff = countdownIn24Hours(dt) 
+           
+            if (diff < 0){
+               // this means that the 24hrs has expired 
+               let newHistory = {...history}
+               const timestamp = new Date(dt)
+               const formattedTimestamp = timestamp.toString().split(' ').slice(1,4).join(' ') 
+
+               newHistory[formattedTimestamp] = d
+               setHistory(newHistory)
+               setDay(1)
+               setDatetime(null)
+               setAttempts(0)
+
+               localStorage.setItem('attempts', 0)
+               localStorage.setItem('history', JSON.stringify(newHistory))
+               localStorage.setItem('day', JSON.stringify({
+                  day: 1,
+                  datetime: null 
+               }))
+
+            }
+         }
+      }
+
+     
+
    }, [])
 
 
    const pages = {
       0: <Welcome handleCreateAccount={handleCreateAccount} name={name} setName={setName} />,
       1: <Dashboard history={history} name={name} attempts={attempts} PLAN={PLAN} day={day} handleChangePage={handleChangePage} daysWords={daysWords} datetime={datetime} />,
-      2: <Challenge day={day} daysWords={daysWords} handleChangePage={handleChangePage} hadleIncrementAttempts={handleIncrementAttempts} handleCompleteDay={handleCompleteDay} PLAN={PLAN}  />
+      2: <Challenge day={day} daysWords={daysWords} handleChangePage={handleChangePage} handleIncrementAttempts={handleIncrementAttempts} handleCompleteDay={handleCompleteDay} PLAN={PLAN}  />
    }
 
    // use the functions to render the pages here 
